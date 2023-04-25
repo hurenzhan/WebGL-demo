@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGL Red Dot</title>
+    <meta charset="utf-8">
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+<script src="../utils.js"></script>
+<script>
+  const canvas = document.getElementById('canvas');
+  const gl = canvas.getContext('webgl');
+
+  // 设置背景色
+  gl.clearColor(0, 0, 0, 1.0);
+  // 清空 canvas
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  /*顶点着色器*/
+  // gl_Position 内置变量，表示顶点位置
+  // gl_PointSize 内置变量，表示点的尺寸
+  const VSHADER_SOURCE = `
+    void main() {
+      gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+      gl_PointSize = 10.0;
+    }
+  `;
+
+  /*片元着色器*/
+  // gl_FragColor 内置变量，表示片元颜色
+  const FSHADER_SOURCE = `
+    void main() {
+      gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    }
+  `;
+
+  initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE);
+
+  /*创建顶点着色器*/
+  gl.drawArrays(gl.POINTS, 0, 1);
+</script>
+</html>
